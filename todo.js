@@ -53,7 +53,8 @@ function createElementFromHTML(html) {
 function renderTodos() {
     const todoList = document.getElementById("todo-list"); // megkeressük a konténert, ahová az elemeket tesszük
     todoList.innerHTML = ""; // a jelenleg a DOM-ban levő to-do elemeket töröljük
-    todos.forEach(todo => { // bejárjuk a jelenlegi todo elemeket (alternatív, funkcionális bejárással)
+    const filtered = todos.filter(function(todo){ return todo.state === currentTab || currentTab === "all"; });
+    filtered.forEach(todo => { // bejárjuk a jelenlegi todo elemeket (alternatív, funkcionális bejárással)
         const row = createElementFromHTML(
             `<div class="row">
                 <div class="col d-flex p-0">
