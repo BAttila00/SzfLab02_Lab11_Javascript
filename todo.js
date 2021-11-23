@@ -71,7 +71,19 @@ function renderTodos() {
             if (todo.state === button.action) // azt a gombot letiljuk, amilyen állapotban van egy elem
                 btn.disabled = true;
 
-            // TODO: a gomb klikk eseményének kezelése
+            btn.onclick = () => { // klikk eseményre
+                if (button.action === "remove") { // ha törlés
+                    if (confirm("Are you sure you want to delete the todo titled '" + todo.name + "'?")) { // megerősítés után
+                        todos.splice(todos.indexOf(todo), 1); // kiveszünk a 'todo'-adik elemtől 1 elemet a todos tömbből
+                        renderTodos();
+                    }
+                }
+                else { // ha nem törlés
+                    todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
+                    renderTodos();
+                }
+            }
+
 
             row.querySelector(".action-buttons").appendChild(btn); // a virtuális elem gomb konténerébe beletesszük a gombot
         });
@@ -97,4 +109,3 @@ function selectTab(type) {
 }
 
 selectTab("all"); // app indulásakor kiválasztjuk az "all" fület
-
