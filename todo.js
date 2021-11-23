@@ -51,6 +51,7 @@ function createElementFromHTML(html) {
     return virtualElement.childElementCount == 1 ? virtualElement.firstChild : virtualElement.children;
 }
 
+let currentTab; // a jelenleg kiválasztott fül
 
 function renderTodos() {
     const todoList = document.getElementById("todo-list"); // megkeressük a konténert, ahová az elemeket tesszük
@@ -75,6 +76,11 @@ function renderTodos() {
             if (todo.state === button.action && button.action != "moveUp" && button.action != "moveDown") // azt a gombot letiljuk, amilyen állapotban van egy elem
                 btn.disabled = true;
 
+            if(todos.indexOf(todo) === 0 && button.action == "moveUp")
+                btn.disabled = true;
+            if(todos.indexOf(todo) === todos.length-1 && button.action == "moveDown")
+                btn.disabled = true;
+
             btn.onclick = () => { // klikk eseményre
                 if (button.action === "remove") { // ha törlés
                     if (confirm("Are you sure you want to delete the todo titled '" + todo.name + "'?")) { // megerősítés után
@@ -82,9 +88,9 @@ function renderTodos() {
                         renderTodos();
                     }
                 }
-                else { // ha nem törlés
-                    if (button.action != "moveUp" && button.action != "moveDown")
-                        todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
+                else if (button.action != "moveUp" && button.action != "moveDown"){ // ha nem törlés
+                    todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
+
                     renderTodos();
                 }
             }
@@ -108,7 +114,7 @@ function renderTodos() {
 renderTodos(); // kezdeti állapot kirajzolása
 
 
-let currentTab; // a jelenleg kiválasztott fül
+//let currentTab; // a jelenleg kiválasztott fül
 
 function selectTab(type) {
     currentTab = type; // eltároljuk a jelenlegi fül értéket
