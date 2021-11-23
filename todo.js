@@ -82,3 +82,19 @@ function renderTodos() {
 
 renderTodos(); // kezdeti állapot kirajzolása
 
+
+let currentTab; // a jelenleg kiválasztott fül
+
+function selectTab(type) {
+    currentTab = type; // eltároljuk a jelenlegi fül értéket
+    for (let tab of document.getElementsByClassName("todo-tab")) {
+        tab.classList.remove("active"); // az összes fülről levesszük az .active osztályt
+        if (tab.getAttribute("data-tab-name") == type) // ha ez a fül van épp kiválasztva
+            tab.classList.add("active"); // erre az egyre visszatesszük az .active osztályt
+    }
+
+    renderTodos(); // újrarajzolunk mindent
+}
+
+selectTab("all"); // app indulásakor kiválasztjuk az "all" fület
+

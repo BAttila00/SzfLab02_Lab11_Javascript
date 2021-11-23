@@ -19,22 +19,22 @@
     <div class="row my-3">
         <ul class="col nav nav-pills nav-fill">
             <li class="nav-item">
-                <a class="todo-tab nav-item nav-link active" href="#all">
+                <a class="todo-tab nav-link" data-tab-name="all" href="#all" onclick="selectTab('all')">
                     All <span class="badge bg-secondary">1</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="todo-tab nav-item nav-link" href="#active">
+                <a class="todo-tab nav-link" data-tab-name="active" href="#active" onclick="selectTab('active')">
                     Active <span class="badge bg-secondary">1</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="todo-tab nav-item nav-link" href="#inactive">
+                <a class="todo-tab nav-link" data-tab-name="inactive" href="#inactive" onclick="selectTab('inactive')">
                     Inactive <span class="badge bg-secondary"></span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="todo-tab nav-item nav-link" href="#done">
+                <a class="todo-tab nav-link" data-tab-name="done" href="#done" onclick="selectTab('done')">
                     Done <span class="badge bg-secondary"></span>
                 </a>
             </li>
