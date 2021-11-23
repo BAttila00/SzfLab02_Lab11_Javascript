@@ -23,3 +23,22 @@ form.onsubmit = event => {
         // TODO: újrarajzolni a listát
     }
 }
+
+
+class Button {
+    constructor(action, icon, type, title) {
+        this.action = action; // a művelet, amit a gomb végez
+        this.icon = icon; // a FontAwesome ikon neve (class="fas fa-*")
+        this.type = type; // a gomb Bootstrapbeni típusa ("secondary", "danger" stb.)
+        this.title = title; // a gomb tooltip szövege
+    }
+}
+
+const buttons = [ // a gombokat reprezentáló modell objektumok tömbje
+    new Button("done", "check", "success", "Mark as done"),
+    new Button("active", "plus", "secondary", "Mark as active"),
+    // az objektumot dinamikusan is kezelhetjük, ekkor nem a konstruktorral példányosítjuk:
+    { action: "inactive", icon: "minus", type: "secondary", title: "Mark as inactive" },
+    new Button("remove", "trash", "danger", "Remove"),
+];
+
