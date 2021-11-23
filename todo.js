@@ -6,11 +6,16 @@ class Todo {
     }
 }
 
-const todos = [];
+todos = [];
 const states = ["active", "inactive", "done"];
 const tabs = ["all"].concat(states);
 
 console.log(tabs);
+
+//todo elemek visszatoltese
+var retrievedTodos = localStorage.getItem('todos');
+if(retrievedTodos != null)
+    todos = JSON.parse(retrievedTodos);
 
 const form = document.getElementById("new-todo-form");
 const input = document.getElementById("new-todo-title");
@@ -21,6 +26,7 @@ form.onsubmit = event => {
         todos.push(new Todo(input.value, "active")); // új to-do-t aktív állapotban hozunk létre
         input.value = ""; // kiürítjük az inputot
         renderTodos();
+        storeTodos();
     }
 }
 
@@ -59,6 +65,11 @@ function arraymove(arr, fromIndex, toIndex) {
     arr.splice(toIndex, 0, element);
 }
 
+//todo elemek elmentese
+function storeTodos(){
+    localStorage.setItem('todos', JSON.stringify(todos));
+}
+
 function renderTodos() {
     const todoList = document.getElementById("todo-list"); // megkeressük a konténert, ahová az elemeket tesszük
     todoList.innerHTML = ""; // a jelenleg a DOM-ban levő to-do elemeket töröljük
@@ -92,6 +103,7 @@ function renderTodos() {
                     if (confirm("Are you sure you want to delete the todo titled '" + todo.name + "'?")) { // megerősítés után
                         todos.splice(todos.indexOf(todo), 1); // kiveszünk a 'todo'-adik elemtől 1 elemet a todos tömbből
                         renderTodos();
+                        storeTodos();
                     }
                 }
                 else if (button.action != "moveUp" && button.action != "moveDown"){ // ha nem törlés és nem fel-le nyíl egyike
@@ -105,6 +117,7 @@ function renderTodos() {
                         arraymove(todos, todos.indexOf(todo), todos.indexOf(todo)+1);
                     
                     renderTodos();
+                    storeTodos();
                 }
             }
 
