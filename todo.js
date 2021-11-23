@@ -53,6 +53,12 @@ function createElementFromHTML(html) {
 
 let currentTab; // a jelenleg kiválasztott fül
 
+function arraymove(arr, fromIndex, toIndex) {
+    var element = arr[fromIndex];
+    arr.splice(fromIndex, 1);
+    arr.splice(toIndex, 0, element);
+}
+
 function renderTodos() {
     const todoList = document.getElementById("todo-list"); // megkeressük a konténert, ahová az elemeket tesszük
     todoList.innerHTML = ""; // a jelenleg a DOM-ban levő to-do elemeket töröljük
@@ -88,9 +94,16 @@ function renderTodos() {
                         renderTodos();
                     }
                 }
-                else if (button.action != "moveUp" && button.action != "moveDown"){ // ha nem törlés
+                else if (button.action != "moveUp" && button.action != "moveDown"){ // ha nem törlés és nem fel-le nyíl egyike
                     todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
 
+                    renderTodos();
+                } else{     //ha fel-le nyíl egyike
+                    if (button.action === "moveUp")
+                        arraymove(todos, todos.indexOf(todo), todos.indexOf(todo)-1);
+                    else
+                        arraymove(todos, todos.indexOf(todo), todos.indexOf(todo)+1);
+                    
                     renderTodos();
                 }
             }
