@@ -25,7 +25,7 @@ form.onsubmit = event => {
 }
 
 
-class Button {      //Ez lesz egy todo item gombja (azaz maga a todo elem) és ezen lesznek rajta a tulajdonságok (az objektum attribútumai)
+class Button {      //Ez lesz egy todo item-en lévő 4 féle gombhoz egy objektum, hogy egyben tudjuk kezelni egy adott gomb tulajdonságait.
     constructor(action, icon, type, title) {
         this.action = action; // a művelet, amit a gomb végez
         this.icon = icon; // a FontAwesome ikon neve (class="fas fa-*")
