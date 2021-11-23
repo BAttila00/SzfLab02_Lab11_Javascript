@@ -90,6 +90,14 @@ function renderTodos() {
 
         todoList.appendChild(row); // az összeállított HTML-t a DOM-ban levő #todo-list elemhez fűzzük
     });
+
+
+    document.querySelector(".todo-tab[data-tab-name='all'] .badge").innerHTML = todos.length || "";
+
+    for (let state of states)
+        document.querySelector(`.todo-tab[data-tab-name='${state}'] .badge`).innerHTML = todos.filter(t => t.state === state).length || "";
+
+
 }
 
 renderTodos(); // kezdeti állapot kirajzolása
