@@ -40,6 +40,8 @@ const buttons = [ // a gombokat reprezentáló modell objektumok tömbje
     // az objektumot dinamikusan is kezelhetjük, ekkor nem a konstruktorral példányosítjuk:
     { action: "inactive", icon: "minus", type: "secondary", title: "Mark as inactive" },
     new Button("remove", "trash", "danger", "Remove"),
+    new Button("moveUp", "arrow-up", "secondary", "Move up"),
+    new Button("moveDown", "arrow-down", "secondary", "Move down"),
 ];
 
 
@@ -54,6 +56,7 @@ function renderTodos() {
     const todoList = document.getElementById("todo-list"); // megkeressük a konténert, ahová az elemeket tesszük
     todoList.innerHTML = ""; // a jelenleg a DOM-ban levő to-do elemeket töröljük
     const filtered = todos.filter(function(todo){ return todo.state === currentTab || currentTab === "all"; });
+    const filteredButtons = buttons.filter(function (button) { return (button.action != "moveDown" && button.action != "moveUp") || currentTab === "all"; });
     filtered.forEach(todo => { // bejárjuk a jelenlegi todo elemeket (alternatív, funkcionális bejárással)
         const row = createElementFromHTML(
             `<div class="row">
@@ -65,11 +68,11 @@ function renderTodos() {
                 </div>
             </div>`);
 
-        buttons.forEach(button => { // a gomb modellek alapján legyártjuk a DOM gombokat
+        filteredButtons.forEach(button => { // a gomb modellek alapján legyártjuk a DOM gombokat
             const btn = createElementFromHTML(
                 `<button class="btn btn-outline-${button.type} fas fa-${button.icon}" title="${button.title}"></button>`
             );
-            if (todo.state === button.action) // azt a gombot letiljuk, amilyen állapotban van egy elem
+            if (todo.state === button.action && button.action != "moveUp" && button.action != "moveDown") // azt a gombot letiljuk, amilyen állapotban van egy elem
                 btn.disabled = true;
 
             btn.onclick = () => { // klikk eseményre
@@ -80,7 +83,8 @@ function renderTodos() {
                     }
                 }
                 else { // ha nem törlés
-                    todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
+                    if (button.action != "moveUp" && button.action != "moveDown")
+                        todo.state = button.action; // átállítjuk a kiválasztott todo állapotát a gomb állapotára
                     renderTodos();
                 }
             }
